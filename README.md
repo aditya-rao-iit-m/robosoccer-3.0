@@ -1,4 +1,4 @@
-ROBOSOCCER MicroPython and C Base Code
+ROBOSOCCER MicroPython and C++ Base Code
 ************************
 Released under the GNU GPL v3.0 May 2025
 ************************
