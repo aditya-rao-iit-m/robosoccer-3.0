@@ -2,7 +2,7 @@
 // Base Code for RoboSoccer 3.0
 // ESP32S3 Live Camera Streaming
 // 23f3000019@es.study.iitm.ac.in - Aditya Rao
-// Chief Mentor - Dr.Janairaman Viraraghavan
+// Chief Mentor - Dr.Janakiraman Viraraghavan
 // Electrical Engineering Department - IIT Madras
 
 #include "esp_http_server.h"
