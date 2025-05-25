@@ -1,7 +1,8 @@
-// ROBOSOCCER 3.0 - Paradox 2025
-// ESP8266 Code Developed By Aditya Rao
-// Indian Institute of Technology Madras
-
+// Base Code for RoboSoccer 3.0
+// ESP8266 Mecanum Wheels
+// 23f3000019@es.study.iitm.ac.in - Aditya Rao
+// Chief Mentor - Dr.Janakiraman Viraraghavan
+// Electrical Engineering Department - IIT Madras
 
 #include <SocketIOclient.h>
 #include <WebSockets.h>
