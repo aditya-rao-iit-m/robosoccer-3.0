@@ -1,3 +1,9 @@
+// Base Code for RoboSoccer 3.0
+// ESP8266 Regular Wheels
+// 23f3000019@es.study.iitm.ac.in - Aditya Rao
+// Chief Mentor - Dr.Janakiraman Viraraghavan
+// Electrical Engineering Department - IIT Madras
+
 const char *HTML_CONTENT = R"=====(
 
 <!DOCTYPE html>
