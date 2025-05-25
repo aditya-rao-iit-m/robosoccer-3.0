@@ -1,4 +1,4 @@
-ROBOSOCCER MicroPython Base Code for ESP8266 - Mecanum Weels
+ROBOSOCCER Base Code for ESP8266 - Mecanum Weels
 ************************
 Released under the GNU GPL v3.0 May 2025
 ************************
