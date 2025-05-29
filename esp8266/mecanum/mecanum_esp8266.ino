@@ -28,16 +28,16 @@
 #define CMD_ROTATE_RIGHT    512
 
 // Motor Driver Pins - LEFT SIDE MOTOR DRIVER
-#define IN1_FL 4    // GPIO4    Front Left
-#define IN2_FL 5    // GPIO5    Front Left
-#define IN1_FR 13   // GPIO13   Front Right
-#define IN2_FR 15   // GPIO15   Front Right
+#define IN1_FL 4    // GPIO4    Front Left    D2
+#define IN2_FL 5    // GPIO5    Front Left    D1
+#define IN1_FR 13   // GPIO13   Front Right   D7
+#define IN2_FR 15   // GPIO15   Front Right   D8
 
 // Motor Driver Pins - RIGHT SIDE MOTOR DRIVER
-#define IN1_RL 14   // GPIO14   Rear Left
-#define IN2_RL 12   // GPIO12   Rear Left
-#define IN1_RR 2    // GPIO2    Rear Right
-#define IN2_RR 0    // GPIO0    Rear Right
+#define IN1_RL 14   // GPIO14   Rear Left     D5
+#define IN2_RL 12   // GPIO12   Rear Left     D6
+#define IN1_RR 2    // GPIO2    Rear Right    D4
+#define IN2_RR 0    // GPIO0    Rear Right    D3
 
 const char* ssid = "robosoccer";
 const char* password = "iitmadras";
