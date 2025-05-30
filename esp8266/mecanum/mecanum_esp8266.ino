@@ -28,16 +28,17 @@
 #define CMD_ROTATE_RIGHT    512
 
 // LEFT Motor Driver Pins - LEFT SIDE WHEELS
-#define IN1_FL 4    // GPIO4    Front Left    D2
-#define IN2_FL 5    // GPIO5    Front Left    D1
-#define IN2_RL 12   // GPIO12   Rear Left     D6
-#define IN1_RL 14   // GPIO14   Rear Left     D5
+#define IN1_LEFT_FRONT_WHEEL_FORWARDS 4    // GPIO4    Front Left    D2   Forwards   l_driver_in1
+#define IN2_LEFT_FRONT_WHEEL_BACKWARDS 5   // GPIO5    Front Left    D1   Backwards  l_driver_in2
+#define IN3_LEFT_REAR_WHEEL_BACKWARDS 12   // GPIO12   Rear Left     D6   Backwards  l_driver_in3
+#define IN4_LEFT_REAR_WHEEL_FORWARDS 14    // GPIO14   Rear Left     D5   Forwards   l_driver_in4
+
 
 // RIGHT Motor Driver Pins - RIGHT SIDE WHEELS
-#define IN1_RR 2    // GPIO2    Rear Right    D4
-#define IN2_RR 0    // GPIO0    Rear Right    D3
-#define IN1_FR 13   // GPIO13   Front Right   D7
-#define IN2_FR 15   // GPIO15   Front Right   D8
+#define IN1_RIGHT_REAR_WHEEL_BACKWARDS 2    // GPIO2    Rear Right    D4  Backwards  r_driver_in1
+#define IN2_RIGHT_REAR_WHEEL_FORWARDS 0     // GPIO0    Rear Right    D3  Forwards   r_driver_in2
+#define IN3_RIGHT_FRONT_WHEEL_FORWARDS 15   // GPIO15   Front Right   D8  Forwards   r_driver_in3
+#define IN4_RIGHT_FRONT_WHEEL_BACKWARDS 13  // GPIO13   Front Right   D7  Backwards  r_driver_in4
 
 const char* ssid = "robosoccer";
 const char* password = "iitmadras";
@@ -80,7 +81,7 @@ void setup() {
   Serial.begin(9600);
 
   // Set all motor pins as OUTPUT
-  int motorPins[] = {IN1_FL, IN2_FL, IN1_RL, IN2_RL, IN1_FR, IN2_FR, IN1_RR, IN2_RR};
+  int motorPins[] = {IN1_LEFT_FRONT_WHEEL_FORWARDS, IN2_LEFT_FRONT_WHEEL_BACKWARDS, IN4_LEFT_REAR_WHEEL_FORWARDS, IN3_LEFT_REAR_WHEEL_BACKWARDS, IN4_RIGHT_FRONT_WHEEL_BACKWARDS, IN3_RIGHT_FRONT_WHEEL_FORWARDS, IN1_RIGHT_REAR_WHEEL_BACKWARDS, IN2_RIGHT_REAR_WHEEL_FORWARDS};
   for (int i = 0; i < 8; i++) {
     pinMode(motorPins[i], OUTPUT);
     digitalWrite(motorPins[i], LOW);
@@ -111,52 +112,57 @@ void loop() {
   webSocket.loop();
 }
 
-// Movement Functions for Mecanum Drive
+// Fully functional movement functions for Mecanum Wheel Drive
+// Important : Note that the physical position of the motors on the chassis influence HIGH and LOW
+// If your FRONT AND REAR BO motors are installed physically opposed, these values will work
+// For other positions of the motors, flip the HIGH and LOW of the rear motors accordingly
+// Aditya Rao - Thursday, 29th May 2025. RoboSoccer 3.0
+
 void moveForward() {
-  digitalWrite(IN1_FL, HIGH); digitalWrite(IN2_FL, LOW);
-  digitalWrite(IN1_RL, HIGH); digitalWrite(IN2_RL, LOW);
-  digitalWrite(IN1_FR, HIGH); digitalWrite(IN2_FR, LOW);
-  digitalWrite(IN1_RR, HIGH); digitalWrite(IN2_RR, LOW);
+  digitalWrite(IN1_LEFT_FRONT_WHEEL_FORWARDS, HIGH); digitalWrite(IN2_LEFT_FRONT_WHEEL_BACKWARDS, LOW);
+  digitalWrite(IN4_LEFT_REAR_WHEEL_FORWARDS, HIGH); digitalWrite(IN3_LEFT_REAR_WHEEL_BACKWARDS, LOW);
+  digitalWrite(IN4_RIGHT_FRONT_WHEEL_BACKWARDS, HIGH); digitalWrite(IN3_RIGHT_FRONT_WHEEL_FORWARDS, LOW);
+  digitalWrite(IN1_RIGHT_REAR_WHEEL_BACKWARDS, HIGH); digitalWrite(IN2_RIGHT_REAR_WHEEL_FORWARDS, LOW);
 }
 
 void moveBackward() {
-  digitalWrite(IN1_FL, LOW); digitalWrite(IN2_FL, HIGH);
-  digitalWrite(IN1_RL, LOW); digitalWrite(IN2_RL, HIGH);
-  digitalWrite(IN1_FR, LOW); digitalWrite(IN2_FR, HIGH);
-  digitalWrite(IN1_RR, LOW); digitalWrite(IN2_RR, HIGH);
+  digitalWrite(IN1_LEFT_FRONT_WHEEL_FORWARDS, LOW); digitalWrite(IN2_LEFT_FRONT_WHEEL_BACKWARDS, HIGH);
+  digitalWrite(IN4_LEFT_REAR_WHEEL_FORWARDS, LOW); digitalWrite(IN3_LEFT_REAR_WHEEL_BACKWARDS, HIGH);
+  digitalWrite(IN4_RIGHT_FRONT_WHEEL_BACKWARDS, LOW); digitalWrite(IN3_RIGHT_FRONT_WHEEL_FORWARDS, HIGH);
+  digitalWrite(IN1_RIGHT_REAR_WHEEL_BACKWARDS, LOW); digitalWrite(IN2_RIGHT_REAR_WHEEL_FORWARDS, HIGH);
 }
 
 void strafeLeft() {
-  digitalWrite(IN1_FL, LOW); digitalWrite(IN2_FL, HIGH);
-  digitalWrite(IN1_RL, HIGH); digitalWrite(IN2_RL, LOW);
-  digitalWrite(IN1_FR, HIGH); digitalWrite(IN2_FR, LOW);
-  digitalWrite(IN1_RR, LOW); digitalWrite(IN2_RR, HIGH);
+  digitalWrite(IN1_LEFT_FRONT_WHEEL_FORWARDS, LOW); digitalWrite(IN2_LEFT_FRONT_WHEEL_BACKWARDS, HIGH);
+  digitalWrite(IN4_LEFT_REAR_WHEEL_FORWARDS, HIGH); digitalWrite(IN3_LEFT_REAR_WHEEL_BACKWARDS, LOW);
+  digitalWrite(IN4_RIGHT_FRONT_WHEEL_BACKWARDS, HIGH); digitalWrite(IN3_RIGHT_FRONT_WHEEL_FORWARDS, LOW);
+  digitalWrite(IN1_RIGHT_REAR_WHEEL_BACKWARDS, LOW); digitalWrite(IN2_RIGHT_REAR_WHEEL_FORWARDS, HIGH);
 }
 
 void strafeRight() {
-  digitalWrite(IN1_FL, HIGH); digitalWrite(IN2_FL, LOW);
-  digitalWrite(IN1_RL, LOW); digitalWrite(IN2_RL, HIGH);
-  digitalWrite(IN1_FR, LOW); digitalWrite(IN2_FR, HIGH);
-  digitalWrite(IN1_RR, HIGH); digitalWrite(IN2_RR, LOW);
+  digitalWrite(IN1_LEFT_FRONT_WHEEL_FORWARDS, HIGH); digitalWrite(IN2_LEFT_FRONT_WHEEL_BACKWARDS, LOW);
+  digitalWrite(IN4_LEFT_REAR_WHEEL_FORWARDS, LOW); digitalWrite(IN3_LEFT_REAR_WHEEL_BACKWARDS, HIGH);
+  digitalWrite(IN4_RIGHT_FRONT_WHEEL_BACKWARDS, LOW); digitalWrite(IN3_RIGHT_FRONT_WHEEL_FORWARDS, HIGH);
+  digitalWrite(IN1_RIGHT_REAR_WHEEL_BACKWARDS, HIGH); digitalWrite(IN2_RIGHT_REAR_WHEEL_FORWARDS, LOW);
 }
 
 void rotateLeft() {
-  digitalWrite(IN1_FL, LOW); digitalWrite(IN2_FL, HIGH);
-  digitalWrite(IN1_RL, LOW); digitalWrite(IN2_RL, HIGH);
-  digitalWrite(IN1_FR, HIGH); digitalWrite(IN2_FR, LOW);
-  digitalWrite(IN1_RR, HIGH); digitalWrite(IN2_RR, LOW);
+  digitalWrite(IN1_LEFT_FRONT_WHEEL_FORWARDS, LOW); digitalWrite(IN2_LEFT_FRONT_WHEEL_BACKWARDS, HIGH);
+  digitalWrite(IN4_LEFT_REAR_WHEEL_FORWARDS, LOW); digitalWrite(IN3_LEFT_REAR_WHEEL_BACKWARDS, HIGH);
+  digitalWrite(IN4_RIGHT_FRONT_WHEEL_BACKWARDS, HIGH); digitalWrite(IN3_RIGHT_FRONT_WHEEL_FORWARDS, LOW);
+  digitalWrite(IN1_RIGHT_REAR_WHEEL_BACKWARDS, HIGH); digitalWrite(IN2_RIGHT_REAR_WHEEL_FORWARDS, LOW);
 }
 
 void rotateRight() {
-  digitalWrite(IN1_FL, HIGH); digitalWrite(IN2_FL, LOW);
-  digitalWrite(IN1_RL, HIGH); digitalWrite(IN2_RL, LOW);
-  digitalWrite(IN1_FR, LOW); digitalWrite(IN2_FR, HIGH);
-  digitalWrite(IN1_RR, LOW); digitalWrite(IN2_RR, HIGH);
+  digitalWrite(IN1_LEFT_FRONT_WHEEL_FORWARDS, HIGH); digitalWrite(IN2_LEFT_FRONT_WHEEL_BACKWARDS, LOW);
+  digitalWrite(IN4_LEFT_REAR_WHEEL_FORWARDS, HIGH); digitalWrite(IN3_LEFT_REAR_WHEEL_BACKWARDS, LOW);
+  digitalWrite(IN4_RIGHT_FRONT_WHEEL_BACKWARDS, LOW); digitalWrite(IN3_RIGHT_FRONT_WHEEL_FORWARDS, HIGH);
+  digitalWrite(IN1_RIGHT_REAR_WHEEL_BACKWARDS, LOW); digitalWrite(IN2_RIGHT_REAR_WHEEL_FORWARDS, HIGH);
 }
 
 void stop() {
-  digitalWrite(IN1_FL, LOW); digitalWrite(IN2_FL, LOW);
-  digitalWrite(IN1_RL, LOW); digitalWrite(IN2_RL, LOW);
-  digitalWrite(IN1_FR, LOW); digitalWrite(IN2_FR, LOW);
-  digitalWrite(IN1_RR, LOW); digitalWrite(IN2_RR, LOW);
+  digitalWrite(IN1_LEFT_FRONT_WHEEL_FORWARDS, LOW); digitalWrite(IN2_LEFT_FRONT_WHEEL_BACKWARDS, LOW);
+  digitalWrite(IN4_LEFT_REAR_WHEEL_FORWARDS, LOW); digitalWrite(IN3_LEFT_REAR_WHEEL_BACKWARDS, LOW);
+  digitalWrite(IN4_RIGHT_FRONT_WHEEL_BACKWARDS, LOW); digitalWrite(IN3_RIGHT_FRONT_WHEEL_FORWARDS, LOW);
+  digitalWrite(IN1_RIGHT_REAR_WHEEL_BACKWARDS, LOW); digitalWrite(IN2_RIGHT_REAR_WHEEL_FORWARDS, LOW);
 }
